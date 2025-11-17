@@ -1,0 +1,23 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block content %}
+<a href="{% url 'blog_create'%}">+ New Blog Post</a>
+    <h1>Blog Posts</h1>
+    
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post-entry">
+                <h2 class="post-title">
+                    <a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a>
+                </h2>
+                <p class="post-author">
+                    <span style="font-weight: 600;">Author:</span> {{ post.author }}
+                </p>
+                <p class="post-body">{{ post.body }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p style="color: #666; font-size: 1.1rem;">No blog posts available.</p>
+    {% endif %}
+{% endblock %}
