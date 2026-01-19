@@ -1,0 +1,49 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="recipe-entry">
+        <h2 class="recipe-title">{{ recipe.title }}</h2>
+        <p class="recipe-category">
+            <span style="font-weight: 600;">Category:</span> {{ recipe.category.name }}
+        </p>
+        <p class="recipe-author">
+            <span style="font-weight: 600;">Author:</span> {{ recipe.user.username }}
+        </p>
+        <p class="recipe-description">
+            <span style="font-weight: 600;">Description:</span> {{ recipe.description }}
+        </p>
+        <p class="recipe-instructions">
+            <span style="font-weight: 600;">Instructions:</span> {{ recipe.instructions }}
+        </p>
+        <p class="recipe-date"><small>Created: {{ recipe.created_at }}</small></p>
+        
+        <h3>Ingredients:</h3>
+        {% if recipe.ingredients.all %}
+            <ul>
+                {% for ingredient in recipe.ingredients.all %}
+                    <li>{{ ingredient.name }} - {{ ingredient.quantity }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No ingredients added yet.</p>
+        {% endif %}
+        
+        <h3>Cooking Tips:</h3>
+        {% if recipe.tips.all %}
+            <ul>
+                {% for tip in recipe.tips.all %}
+                    <li>{{ tip.tip }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No cooking tips added yet.</p>
+        {% endif %}
+        
+        <div class="recipe-actions">
+            <a href="{% url 'recipe_list' %}" class="btn btn-secondary">← Back to Recipes</a>
+            <a href="{% url 'recipe_update' recipe.pk %}" class="btn">Edit Recipe</a>
+            <a href="{% url 'recipe_delete' recipe.pk %}" class="btn btn-danger">Delete Recipe</a>
+        </div>
+    </div>
+{% endblock content %}

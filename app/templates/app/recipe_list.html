@@ -1,0 +1,49 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block content %}
+<a href="{% url 'recipe_create' %}">+ New Recipe</a>
+
+<h1>Recipes</h1>
+
+{% if recipes %}
+    {% for recipe in recipes %}
+        <div class="recipe-entry">
+            <h2 class="recipe-title">
+                <a href="{% url 'recipe_detail' recipe.pk %}">
+                    {{ recipe.title }}
+                </a>
+            </h2>
+
+            <p class="recipe-category">
+                <strong>Category:</strong> {{ recipe.category.name }}
+            </p>
+
+            <p class="recipe-author">
+                <strong>Recipe by:</strong> {{ recipe.user.username }}
+            </p>
+
+            <p class="recipe-description">
+                {{ recipe.description }}
+            </p>
+
+            <p class="recipe-instructions">
+                <strong>Instructions:</strong> {{ recipe.instructions }}
+            </p>
+
+            <p class="recipe-date">
+                <small>Created: {{ recipe.created_at|date:"M d, Y h:i a" }}</small>
+            </p>
+
+            <div class="recipe-actions">
+                <a href="{% url 'recipe_detail' recipe.pk %}">View</a> |
+                <a href="{% url 'recipe_update' recipe.pk %}">Edit</a> |
+                <a href="{% url 'recipe_delete' recipe.pk %}">Delete</a>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p style="color: #666; font-size: 1.1rem;">No recipes available.</p>
+{% endif %}
+
+{% endblock %}

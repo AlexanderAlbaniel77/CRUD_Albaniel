@@ -1,12 +1,24 @@
 from django.urls import path
-from . import views 
+from django.contrib.auth import views as auth_views
+from .views import (
+    HomePageView,
+    AboutPageView,
+    RecipeListView,
+    RecipeDetailView,
+    RecipeCreateView,
+    RecipeUpdateView,
+    RecipeDeleteView,
+    RegisterView,
+)
 
 urlpatterns = [
-    path('', views.HomePageView.as_view(), name='home'),  
-    path('about/', views.AboutPageView.as_view(), name='about'),
-    path('blog/', views.BlogListView.as_view(), name='blog_list'),
-    path('blog/<int:pk>/', views.BlogDetailView.as_view(), name='blog_detail'),
-    path('blog/create/', views.BlogCreateView.as_view(), name='blog_create'),
-    path('blog/<int:pk>/edit/', views.BlogUpdateView.as_view(), name='blog_update'),
-    path('blog/<int:pk>/delete/', views.BlogDeleteView.as_view(), name='blog_delete'),
+    path('', HomePageView.as_view(), name='home'),
+    path('about/', AboutPageView.as_view(), name='about'),
+
+    # Recipe URLs
+    path('recipes/', RecipeListView.as_view(), name='recipe_list'),
+    path('recipes/create/', RecipeCreateView.as_view(), name='recipe_create'),
+    path('recipes/<int:pk>/', RecipeDetailView.as_view(), name='recipe_detail'),
+    path('recipes/<int:pk>/edit/', RecipeUpdateView.as_view(), name='recipe_update'),
+    path('recipes/<int:pk>/delete/', RecipeDeleteView.as_view(), name='recipe_delete'),
 ]

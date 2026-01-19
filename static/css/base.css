@@ -80,7 +80,7 @@ main {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Blog Post Entry */
+/* Recipe Post Entry */
 .post-entry {
     background: white;
     border-left: 5px solid #ff1744;
@@ -197,4 +197,43 @@ footer {
     margin-top: 40px;
     color: white;
     font-size: 0.9rem;
+}
+/* =========================
+   FORM FIX (Create Recipe)
+   ========================= */
+
+.recipe-form {
+    max-width: 600px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels */
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+/* Inputs, Textareas, Select */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+/* Textarea alignment fix */
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+    vertical-align: top;
 }

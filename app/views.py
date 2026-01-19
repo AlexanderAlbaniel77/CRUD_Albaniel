@@ -1,37 +1,55 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from .models import Recipe
+
+
+class RegisterView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'app/register.html'
+    success_url = reverse_lazy('login')
+
 
 class HomePageView(TemplateView):
     template_name = "app/home.html"
 
 class AboutPageView(TemplateView):
-    template_name = "app/About.html"
+    template_name = "app/about.html"
 
-class BlogListView(ListView):
-    model = Post
-    template_name = "app/blog_list.html"
-    context_object_name = "posts"
 
-class BlogDetailView(DetailView):
-    model = Post
-    context_object_name = "post"
-    template_name = "app/blog_detail.html"
+class RecipeListView(ListView):
+    model = Recipe
+    template_name = "app/recipe_list.html"
+    context_object_name = "recipes"
 
-class BlogCreateView(CreateView):
-    model = Post
-    template_name = "app/blog_create.html"
-    fields = ['title', 'body', 'author']
-    success_url = '/blog/'
+class RecipeDetailView(DetailView):
+    model = Recipe
+    context_object_name = "recipe"
+    template_name = "app/recipe_detail.html"
 
-class BlogUpdateView(UpdateView):
-    model = Post
-    template_name = "app/blog_update.html"
-    fields = ['title', 'body']
-    success_url = '/blog/'
+class RecipeCreateView( CreateView):
+    model = Recipe
+    template_name = "app/recipe_create.html"
+    fields = ['title', 'description', 'instructions', 'category']
+    success_url = reverse_lazy('recipe_list')
+    
+    
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
-class BlogDeleteView(DeleteView):
-    model = Post
-    template_name = "app/blog_delete.html"
-    success_url = '/blog/'
+class RecipeUpdateView( UpdateView):
+    model = Recipe
+    template_name = "app/recipe_update.html"
+    fields = ['title', 'description', 'instructions', 'category']
+    success_url = reverse_lazy('recipe_list')
+    
+
+class RecipeDeleteView( DeleteView):
+    model = Recipe
+    template_name = "app/recipe_delete.html"
+    success_url = reverse_lazy('recipe_list')
+    

@@ -1,0 +1,35 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Edit Recipe</h1>
+
+<form method="post" class="recipe-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+    </div>
+
+    <div class="form-group">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+    </div>
+
+    <div class="form-group">
+        {{ form.instructions.label_tag }}
+        {{ form.instructions }}
+    </div>
+
+    <div class="form-group">
+        {{ form.category.label_tag }}
+        {{ form.category }}
+    </div>
+
+    <div class="recipe-actions">
+        <button type="submit" class="btn">Update</button>
+        <a href="{% url 'recipe_detail' recipe.pk %}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+{% endblock content %}
