@@ -1,10 +1,26 @@
 <header>
     <nav>
-        <ul>
+        <ul class="nav-left">
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'recipe_list' %}">Recipes</a></li>
-            
+        </ul>
+
+        <ul class="nav-right">
+            {% if user.is_authenticated %}
+                <li>Hi, {{ user.username }}!</li>
+                <li>
+                    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background:none; border:none; color:#667eea; font-weight:600; cursor:pointer;">
+                            Logout
+                        </button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
         </ul>
     </nav>
 </header>

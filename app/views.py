@@ -30,7 +30,7 @@ class RecipeDetailView(DetailView):
     context_object_name = "recipe"
     template_name = "app/recipe_detail.html"
 
-class RecipeCreateView( CreateView):
+class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
     template_name = "app/recipe_create.html"
     fields = ['title', 'description', 'instructions', 'category']
@@ -41,14 +41,14 @@ class RecipeCreateView( CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class RecipeUpdateView( UpdateView):
+class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
     template_name = "app/recipe_update.html"
     fields = ['title', 'description', 'instructions', 'category']
     success_url = reverse_lazy('recipe_list')
     
 
-class RecipeDeleteView( DeleteView):
+class RecipeDeleteView(LoginRequiredMixin, DeleteView):
     model = Recipe
     template_name = "app/recipe_delete.html"
     success_url = reverse_lazy('recipe_list')
